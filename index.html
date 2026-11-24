@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101326">
+  <meta name="description" content="Your campus timetable, organised by group.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <title>CampusSchedule — Your campus, in sync</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="CampusSchedule home">
+        <span class="brand-mark">C</span>
+        <span>Campus<span class="brand-light">Schedule</span></span>
+      </a>
+      <div class="top-actions">
+        <span class="network-pill"><i id="networkDot"></i><span id="networkText">Checking…</span></span>
+        <button class="icon-button" id="installBtn" hidden aria-label="Install app" title="Install app">↓</button>
+        <button class="avatar" id="profileBtn" aria-label="Student profile">S</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="welcome-row">
+        <div>
+          <p class="eyebrow">YOUR CAMPUS, IN SYNC</p>
+          <h1>Good day<span class="accent">.</span></h1>
+          <p class="subhead">Your classes, clearly organised.</p>
+        </div>
+        <div class="date-chip"><span id="todayWeekday">MON</span><strong id="todayDate">21</strong><span id="todayMonth">NOV</span></div>
+      </section>
+
+      <section class="login-panel panel" id="loginPanel">
+        <div class="panel-heading">
+          <div><p class="eyebrow">GET STARTED</p><h2>Find your timetable</h2></div>
+          <span class="step-tag">01 / GROUP</span>
+        </div>
+        <p class="muted">Choose your campus and enter your class group to view its weekly schedule.</p>
+        <label for="campusSelect">Campus</label>
+        <select id="campusSelect">
+          <option value="mamelodi">Mamelodi Campus</option>
+          <option value="cape-town">Cape Town Campus</option>
+          <option value="central">Central Campus</option>
+        </select>
+        <label for="groupInput">Group number</label>
+        <div class="input-row"><input id="groupInput" maxlength="14" placeholder="e.g. IT-23-3" autocomplete="off"><button id="findBtn" class="primary-button">View timetable <span>→</span></button></div>
+        <p class="hint">Try <button class="text-button" data-group="IT-23-3">IT-23-3</button>, <button class="text-button" data-group="CS-22-1">CS-22-1</button> or <button class="text-button" data-group="EN-24-2">EN-24-2</button>.</p>
+        <p class="notice"><span>ⓘ</span> Sample schedules are included so you can explore the experience. Confirmed campus timetables can be added by the institution.</p>
+        <p class="error" id="loginError" role="alert"></p>
+      </section>
+
+      <section id="scheduleSection" hidden>
+        <div class="section-title-row">
+          <div><p class="eyebrow">YOUR LEARNING WEEK</p><h2 id="groupHeading">IT-23-3</h2><p class="muted small" id="campusHeading">Mamelodi Campus · Sample schedule</p></div>
+          <button class="outline-button" id="changeGroupBtn">Change group</button>
+        </div>
+
+        <div class="week-card panel">
+          <div class="week-top">
+            <div><p class="eyebrow">WEEK OVERVIEW</p><h3 id="weekLabel">This week</h3></div>
+            <div class="week-arrows"><button class="round-button" id="prevWeek" aria-label="Previous week">‹</button><button class="round-button" id="nextWeek" aria-label="Next week">›</button></div>
+          </div>
+          <div class="day-strip" id="dayStrip" aria-label="Choose a day"></div>
+          <div class="day-summary"><div><span class="muted small">SELECTED DAY</span><h3 id="selectedDayLabel">Monday</h3></div><span class="class-count" id="classCount">3 classes</span></div>
+          <div id="classList" class="class-list"></div>
+          <div id="emptyDay" class="empty-state" hidden><div class="empty-icon">☀</div><h3>A little room to breathe</h3><p>No classes are scheduled for this day.</p></div>
+        </div>
+
+        <div class="quick-grid">
+          <article class="mini-card panel"><span class="mini-icon purple">◷</span><div><p class="muted small">NEXT CLASS</p><strong id="nextClassTitle">—</strong><span id="nextClassTime" class="muted small">You're all caught up</span></div></article>
+          <article class="mini-card panel"><span class="mini-icon blue">▦</span><div><p class="muted small">THIS WEEK</p><strong id="weekClassTotal">—</strong><span class="muted small">scheduled sessions</span></div></article>
+        </div>
+      </section>
+
+      <section class="features">
+        <div class="section-title-row"><div><p class="eyebrow">MADE FOR STUDENT LIFE</p><h2>More focus. Less confusion.</h2></div></div>
+        <div class="feature-grid">
+          <article class="feature-card"><span class="feature-symbol">↔</span><h3>Your week at a glance</h3><p>Move between days and weeks without losing your place.</p></article>
+          <article class="feature-card"><span class="feature-symbol">◉</span><h3>Works offline</h3><p>Once loaded, your saved timetable stays available on this device.</p></article>
+          <article class="feature-card"><span class="feature-symbol">⌂</span><h3>On your home screen</h3><p>Install CampusSchedule for a quick, app-like experience.</p></article>
+        </div>
+      </section>
+
+      <section class="community panel">
+        <div class="community-art"><span>✳</span><span>✳</span><span>✳</span></div>
+        <div class="community-copy"><p class="eyebrow">BUILT AROUND STUDENTS</p><h2>Help shape the next version.</h2><p class="muted">We want to make reliable timetables easier to access across campuses. Share feedback or ask your student representative about bringing verified schedules to this platform.</p><button class="outline-link feedback-open" id="openFeedbackBtn" type="button">Share feedback <span>↗</span></button></div>
+      </section>
+    </main>
+
+    <footer><div class="brand footer-brand"><span class="brand-mark">C</span><span>Campus<span class="brand-light">Schedule</span></span></div><p>Designed to make campus life a little easier.</p><p class="footer-small">Timetable information shown here is sample content unless confirmed by your institution.</p></footer>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <dialog id="feedbackDialog" class="feedback-dialog" aria-labelledby="feedbackTitle">
+    <button class="dialog-close" id="closeFeedback" type="button" aria-label="Close form">×</button>
+    <div class="form-kicker"><span class="form-mark">✳</span><span class="eyebrow">YOUR VOICE MATTERS</span></div>
+    <h2 id="feedbackTitle">Help bring better timetables to students.</h2>
+    <p class="muted form-intro">Answer a few quick questions. Your feedback will be sent to the CampusSchedule team.</p>
+    <form id="feedbackForm">
+      <label for="feedbackName">Your name <span class="optional">(optional)</span></label>
+      <input id="feedbackName" name="name" maxlength="80" autocomplete="name" placeholder="What should we call you?">
+      <label for="feedbackEmail">Email address <span class="optional">(optional)</span></label>
+      <input id="feedbackEmail" name="email" type="email" maxlength="120" autocomplete="email" placeholder="name@example.com">
+      <label for="feedbackCampus">Which institution or campus do you attend?</label>
+      <input id="feedbackCampus" name="campus" maxlength="120" required placeholder="e.g. CPUT — District Six Campus">
+      <label for="feedbackRole">Are you currently a student?</label>
+      <select id="feedbackRole" name="student_status" required><option value="" disabled selected>Choose an answer</option><option>Yes, full-time</option><option>Yes, part-time</option><option>No, I am a prospective student</option><option>No, I support students</option></select>
+      <label for="feedbackNeed">How useful would one reliable place for your timetable be?</label>
+      <select id="feedbackNeed" name="timetable_need" required><option value="" disabled selected>Select an option</option><option>Extremely useful</option><option>Very useful</option><option>Somewhat useful</option><option>Not useful for me</option></select>
+      <label for="feedbackPetition">Would you support your institution making verified timetables available through a service like this?</label>
+      <div class="choice-row"><label class="choice"><input type="radio" name="petition_support" value="Yes" required><span>Yes, I support it</span></label><label class="choice"><input type="radio" name="petition_support" value="Maybe"><span>Maybe</span></label><label class="choice"><input type="radio" name="petition_support" value="No"><span>No</span></label></div>
+      <label for="feedbackMessage">What timetable problems should we solve? <span class="optional">(optional)</span></label>
+      <textarea id="feedbackMessage" name="feedback" rows="3" maxlength="1000" placeholder="Tell us what would make this genuinely helpful…"></textarea>
+      <label class="consent-row"><input type="checkbox" name="consent" value="I agree" required><span>I agree that my answers may be processed by FormSubmit and emailed to the CampusSchedule project owner to review feedback and improve the service. I will not include student numbers, ID numbers, passwords or other sensitive information.</span></label>
+      <input type="text" name="_honey" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input type="hidden" name="_subject" value="New CampusSchedule student feedback / petition response">
+      <button class="primary-button submit-feedback" id="submitFeedback" type="submit">Submit feedback <span>→</span></button>
+      <p class="form-privacy">Form delivery is handled by FormSubmit and sent to the project owner. Your name and email are optional. Do not submit sensitive personal information.</p>
+      <p class="form-error" id="formError" role="alert"></p>
+    </form>
+    <div class="success-state" id="feedbackSuccess" hidden><div class="success-check">✓</div><h3>Thank you!</h3><p>Thank you, your feedback has been submitted.</p><button class="primary-button full" id="finishFeedback" type="button">Done</button></div>
+  </dialog>
+  <dialog id="profileDialog" class="profile-dialog"><button class="dialog-close" id="closeProfile">×</button><div class="profile-avatar">S</div><p class="eyebrow">STUDENT SPACE</p><h2 id="profileGroup">Not signed in</h2><p class="muted" id="profileCampus">Choose a group to get started.</p><button class="primary-button full" id="profileDone">Done</button></dialog>
+  <script src="./app.js" defer></script>
+</body>
+</html>
